@@ -1,32 +1,23 @@
 const express = require('express');
 const app = express();
 
-//Handle Auth Middleware for GET, POST, PUT, DELETE requests
-const {adminAuth, userAuth} = require('./middleware/auth');
+app.get("/getUserData", (req, res) => {
+    // try {
+        //DB logic to get user data
 
-app.use('/admin', adminAuth);
-app.use('/user', userAuth);
+        throw new Error("This is a test error");
+        res.send("User Data Send");
 
-
-app.get('/admin/getAllData', (req, res, next) => {
-    res.send("Welcome to the admin route!");
-    next();
+    // } catch (error) { 
+    //     res.status(500).send("Something wrong while fetching user data"); 
+    // }
 });
 
-app.post('/admin', (req, res) => {
-    res.send("Admin POST request received!");
+app.use("/", (err, req, res, next) => {
+    if (err) {
+        res.status(500).send("Something went wrong");
+    }
 });
-
-
-app.get('/user', (req, res, next) => {
-    res.send("Welcome to the user route!");
-    next();
-});
-
-app.post('/user', (req, res) => {
-    res.send("User POST request received!");
-});
-
 
 app.listen(7777, () => {
     console.log("Server is running on port 7777");

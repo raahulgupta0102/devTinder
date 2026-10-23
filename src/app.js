@@ -10,17 +10,16 @@ app.post("/signup", async (req, res) => {
         email: "shantanu@gmail.com",
         password: "shantanu@123",
         age: 25
-    }
+    };
 
-    //creating a new user instance and saving it to the database
-    const user = new User(userObj);
     try {
+        const user = new User(userObj);
         await user.save();
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {
         res.status(500).json({ message: "Error creating user", error });
     }
-})
+});
 
 
 
